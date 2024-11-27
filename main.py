@@ -29,25 +29,50 @@ def read_conver_file_into_dictionary(file_name):
             print("File is not a conversion file. Please try again.")
         return
 
-def read_file():
-    morse_name = input("Enter name of conversion file: ").lower().strip()
-    while not os.path.isfile(morse_name):
-        morse_name = input("File not exist. Enter file name: ")
-    return morse_name
-
-def convert_morse(key,morse_dict):
-    new_file = read_file()
-    for line in new_file:
-        if key in morse_dict:
-            print(line)
-
-
-
-
+def convert_morse(morse_dict):
+    passthru = False
+    while not passthru:
+        passthru2 = False
+        while not passthru2:
+            file_name = input('\nEnter file to convert: ').lower()
+            if file_name == 'morse1.txt' or file_name == 'morse2.txt' or file_name == 'morse3.txt':
+                passthru2 = True
+            else:
+                print("Invalid file selection. try again")
+        file_data = open(file_name, 'r')
+        all_conversions = []
+        for line in file_data:
+            characters = line.split()
+            conversion = []
+            for character in characters:
+                character = character + '\n'
+                to_append = morse_dict[character]
+                conversion.append(to_append)
+            all_conversions.append(conversion)
+        file_data.close()
+        new_file = input('Enter name of new file, EXCLUDE SUFFIX: ').lower()
+        file_writing = open(f'{new_file}.txt', 'w')
+        for word in all_conversions:
+            for character in word:
+                file_writing.write(character)
+            file_writing.write('\n')
+        file_writing.close()
+        print('Conversion complete.')
+        while passthru2:
+            continue_query = input('\nConvert another file? Express answer as Y or N: ').lower()
+            if continue_query == 'y':
+                print('Resetting...')
+                passthru2 = False
+            elif continue_query == 'n':
+                print('Thank you for using our converter')
+                passthru2 = False
+                passthru = True
+            else:
+                print('Invalid input. Express answer as Y or N')
 
 def main():
     file_name = read_conversion_file()
     morse_dict = read_conver_file_into_dictionary(file_name)
-
+    convert_morse(morse_dict)
 
 main()
