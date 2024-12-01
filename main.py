@@ -1,4 +1,11 @@
-
+# Programmers: Krishon and Leif
+# Course: CS151, Professor Zee
+# Due Date: November 30, 2024
+# Lab Assignment: Lab 11
+# Problem Statement: We needed to create a program that converts morse code
+# Data In: Morse code conversion file
+# Data Out: File with completed conversion
+# Credits: None other than class notes
 
 # Import os package into the code
 import os
@@ -36,13 +43,14 @@ def read_conver_file_into_dictionary(file_name):
         return morse_dictionary
     except:
         # if the file name is not the assigned conversion file, it spits an error messages and retries
-        if file_name != "morsecode.txt":
+        while file_name != "morsecode.txt":
             print("File is not a conversion file. Please try again.")
+            file_name = input("Enter file name: ").lower().strip()
         return
 
 # Purpose:  Runs conversion on given document and creates new document
 # Parameters: morse_dict
-# Return: the completed conversion file
+# Return: [NONE]
 def convert_morse(morse_dict):
     # assigns passthru value for retry query
     passthru = False
@@ -103,6 +111,10 @@ def convert_morse(morse_dict):
 # Parameters: none
 # Return: the completed conversion file
 def main():
+    print('Welcome to the Morse Converter!')
+    print('*'* 20)
+    print('Use Conversion Tool to Convert Morse Code and Insert it to a New File!')
+    print('*'* 20)
     file_name = read_conversion_file()
     morse_dict = read_conver_file_into_dictionary(file_name)
     convert_morse(morse_dict)
